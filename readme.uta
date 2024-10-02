@@ -1,0 +1,491 @@
+   UTA:	 OPEN SOURCE VERSION OF	THE UNIVERSAL TRANSLATOR ASSISTANT.
+ -------------------------------------------------------------------
+
+FILES:
+
+uta.c -	source
+makefile - make	for uta
+	   adjust the FHOME to be where	you want the .lng files
+	   to be found.
+
+	   set CC to be	your compiler
+
+uta.lng	- Klingon/English UTA source file (mostly the same as tlhIngan.lng)
+rom.lng	- Romulan/English
+vulcan.lng - Vulcan/English
+
+readme.uta - this file
+
+--------------
+uta:  Open Source version of the Universal Translator Assistant.
+
+Supports same .lng files used in the VB	version.  This release does
+not allow editing of the .lng file or filtering	of files. Stay tuned.
+
+
+		      The Universal Translator Assistant Project
+     ___________________________________________________________________________
+
+     * I heard someone is translating the Bible	into Klingon - is that you?
+     * What is Wrong with this?	- why UTA isn't	a translator
+     * How do I	use UTA?
+     * Theory Behind the UTA
+     * How can I use UTA to translate English into Klingon (or other languages)?
+     * Sample UTA sessions
+     ___________________________________________________________________________
+
+ * I HEARD SOMEONE IS TRANSLATING THE BIBLE INTO KLINGON - IS THAT YOU?
+
+   Read	below (	Theory Behind the UTA )	and you'll learn that working with the WEB
+    translation	of the Bible  (http://www.ebible.org/bible/WEB/webfaq.htm ) got	me
+    interested in doing	mock translations into various Science Fiction languages.
+
+   But the UTA project is a pretty simpleminded	translation process - The Klingon
+   Language Institute is working on a serious translation (I *AM* involved in that
+   effort - some of my work, Psalm 117 is at http://members.aol.com/jpklingon.
+   I even intend to use	some of	the work I've done on  the UTA tool
+   for doing translations.  But	the UTA	tool in	its current form is rather silly,
+   and does translations more for their	entertainment value, than linguistic
+   purity.
+
+     ___________________________________________________________________________
+
+ * WHAT	IS WRONG WITH THIS?
+
+   The UTA program does	not - CANNOT translate.	All it does is map words from one
+   language to another.	 Early in the history of MT (machine translations) this
+   idea	was easily disproved.  Here is an experiment - use UTA to "translate"
+
+				  I do not like	you
+
+   into	Klingon.  You will get:
+
+			       jIH ta' ghobe' rur SoH
+
+   That	seems great, and it almost translates back exactly.  Translate it back and
+   you get "I do neither like you".
+
+   No one  of the translation words is wrong:
+     * jIH = I,	I am
+     * ta'  = do, accomplish
+     * ghobe' =	no, not
+     * rur = resemble, be like
+     * SoH = you, you are
+
+   But it doesn't fit together at all as grammatical Klingon.  Besides the meaning
+   for "like" UTA has is "resemble", not the sense of affection	or  friendship.
+
+   The best this could mean in tlhIngan	Hol is
+
+			"He accomplishes I. You	resemble no."
+
+   More	likely it would	be seen	as what	it is: NONSENSE. True Klingon for "I do	not
+   like	you" is	far simpler:
+
+			  qapar	: qa- (I-you) par (dislike)
+
+   Grammar *really* does matter. UTA  can be a good program, for amusement, or
+   automated word lookup. NOT translations.
+     ___________________________________________________________________________
+
+ * HOW DO I USE	UTA?
+
+   Simply run it and it	will allow you to type English words and phrases - when
+   you press enter it will print every word that it has	mapped to Klingon.
+   Unmapped words are printed with brackets.
+
+
+   The programs	starts in "AUTO" mode -	translating English words to Galactic
+   and Galactic	to English as it finds them.  In case the word is in both sides
+   it assumes you are giving English.
+
+   To translate	from English, press "!"	to English only	input.
+
+   To translate	from the target	language back to English) type "!"  again (no quotes),
+   and enter.  Mode switches to	"galactic" (i.e. Klingon, Vulcan, etc.)
+
+   Pressing "!"	again switches back to Auto mode.
+
+   To read a different language	file, type <filename (for example, <vulcan.lng).
+
+   For help, type "?" (no quotes) and enter.
+
+   You may edit	the map	file (uta.lng),	or create new ones, or use the + command
+   to add words:
+
+    ? car
+	    >> [car]
+
+    ? +car Duj
+
+    added car/Duj - dictionary now has 505 words
+
+
+    ? car
+	    >> Duj
+
+    ? >car.lng
+
+	    Writing "car.lng" for language. 505	words written
+
+
+   NOTE: vocab additions are automatically saved to temp.lng in	case you forget	to
+	save your work.
+
+   Language files should be of the form:
+     ___________________________________________________________________________
+
+   "LANG A WORD", "LANG	B WORD"
+   "LANG A WORD", "LANG	B WORD"
+   "LANG A WORD", "LANG	B WORD"
+     ___________________________________________________________________________
+
+   (Usually LANG A is English).
+     ___________________________________________________________________________
+
+   Language "A"	is your	source language, say English,and "B" the target	language,
+   say Klingon,	Vulcan or Spanish.
+
+     ___________________________________________________________________________
+
+ * THEORY BEHIND THE UTA
+
+   Not much. Call it a science fair project gone awry.
+
+   Used	as a lookup tool, it lets you layout vocabulary	words for an aid in
+   translating a text. As a translator,	it demonstrates	the weakness of	machine
+   translation of natural language texts.
+
+   I recently acquired a machine-readable copy of the WEB Bible	translation
+   (http://www.ebible.org/bible/WEB/webfaq.htm ) and was doing a number	of text
+   processing things with it.( if you'd	like to	use the	WEB Bible
+   ftp://members.aol.com/JPKlingon/scroll.zip  is a simple program I wrote to look
+   at it, on Windows machines.)	Along the way I	realized it was	easy to	create a
+   list	of all the unique words	in a passage. From there I wondered "what would
+   happen if I took such a list, say from Isaiah 1, and	(free of context) mapped
+   each	word (that I could) to a Klingon word. With such a mapping, I could quickly
+   lay out the words in	a verse, and reshape them into a grammatical Klingon
+   translation.
+
+   There are three steps to programming	UTA
+
+   1. Choose a source language text to use.
+
+   2 Reduce it to a list of all	unique words.
+
+   3. Translate	each word into the target language to have a word-for-word mapping
+
+     ___________________________________________________________________________
+
+ * HOW CAN I USE UTA TO	TRANSLATE ENGLISH INTO KLINGON (OR OTHER LANGUAGES)?
+
+   You can't. Don't try. What UTA produces is coded English - treating the target
+   language as a code of English. This IS a way	that natural languages get used	(or
+   abused) by non-native speakers of a language	- but it is decidely NOT a
+   translation into the	target language.
+
+   For a more serious tool, and	one which is able to properly parse the	complex
+   Klingon suffix and prefix system you	may get	a version of d'Armond Speers
+   excellent thIngan Hol pojwI'	(Klingon Language Analyzer) at the UTA project,
+    or download	it from
+
+		http://www.geocities.com/CapeCanaveral/4854/dospoj.zip
+
+   For real information	regarding the Klingon languages	refer to the excellent
+   materials from Marc Okrand (The Klingon Dictionary, The Klingon Way,	and Klingon
+   for the Galactic Traveler) and visit	the web	sites of:
+
+     * the Klingon Language Institute at http://www.kli.org or
+     * The Interstellar	Language School	at
+       http://www.geocities.com/Athens/8853/index.html.
+     * Pocket Books at http://www.simonsays.com/startrek
+
+   Let me note here that the vocabulary	I provide is a highly dubious one - I
+   really forced some words in order to	come up	with a Klingon	word to	match
+   English words.
+
+--------------
+
+* Sample UTA Sessions:
+
+$ uta
+
+reading	default	dictionary, uta.lng
+504 words read
+   commandline input "uta -e word word2	word3"
+	translates FROM	english
+
+   commandline input "uta -g word word2	word3"
+	translates FROM	galactic
+
+   commandline input "uta -f vulcan.lng	word .."
+	reads vulcan file and translate	FROM english
+
+USAGE:
+  ? usage note
+  = current mode
+  <file	read file for language
+  >file	write file for language
+  +worda wordb - add worda/wordb pair
+  ! switch mode
+  *case	- toggle case sensitive
+  *quit	- exit
+  *lcars - toggles verbose LCARS style output
+
+
+? hello
+	>> nuqneH
+
+? who are you?
+	>> 'Iv 'oH SoH
+
+? uta
+reading	default	dictionary, uta.lng
+504 words read
+   commandline input "uta -e word word2	word3"
+	translates FROM	english
+
+   commandline input "uta -g word word2	word3"
+	translates FROM	galactic
+
+   commandline input "uta -f vulcan.lng	word .."
+	reads vulcan file and translate	FROM english
+
+USAGE:
+  ? usage note
+  = current mode
+  <file	read file for language
+  >file	write file for language
+  +worda wordb - add worda/wordb pair
+  ! switch mode
+  *case	- toggle case sensitive
+  *quit	- exit
+  *lcars - toggles verbose LCARS style output
+
+
+? hello
+	>> nuqneH
+
+? who are you
+	>> 'Iv 'oH SoH
+
+? 'Iv 'oH SoH
+	>> who am you
+
+? =
+MODE: Automatic	(english/galactic) input.
+
+? !
+now english input.
+
+? 'Iv 'oH SoH
+	>> ['Iv] ['oH] [SoH]
+
+? who are you
+	>> 'Iv 'oH SoH
+
+? !
+now galactic input.
+
+? 'Iv 'oH SoH
+	>> who am you
+
+? <vulcan.lng
+
+	READING	"vulcan.lng" for language. 209 words read
+
+
+? live long and	prosper
+	>> [live] [long] [and] [prosper]
+
+? !
+now Auto (english/galactic) input.
+
+? live long and	prosper
+	>> tich	tor ang	tesmur
+
+? *lcars
+  ________________________________________________________________________
+ / UTA			     CASE MODE sensitive			  \
+ |	   _______________________________________________________________/
+ |________|
+ |_mode___|
+ |_AUTO___|
+ |________| -------------------------------------------------------------
+ |________|
+ |________|
+ |________|
+ |________|
+ |	  |_______________________________________________________________
+ | Commands: ? ! < > = + *quit *lcars *case FILE: vulcan.lng		  \
+ \________________________________________________________________________/
+
+? *case
+  ________________________________________________________________________
+ / UTA			     CASE MODE insensitive			  \
+ |	   _______________________________________________________________/
+ |________|
+ |_mode___|
+ |_AUTO___|
+ |________| -------------------------------------------------------------
+ |________|
+ |________|
+ |________|
+ |________|
+ |	  |_______________________________________________________________
+ | Commands: ? ! < > = + *quit *lcars *case FILE: vulcan.lng		  \
+ \________________________________________________________________________/
+
+ [not case sensitive now ]
+
+? you are my friend
+  ________________________________________________________________________
+ / UTA			     CASE MODE insensitive			  \
+ |	   _______________________________________________________________/
+ |________|
+ |_mode___| you	are my friend
+ |_AUTO___|
+ |________| -------------------------------------------------------------
+ |________|
+ |________| [you] [are]	[my] t'hy'la
+ |________|
+ |________|
+ |	  |_______________________________________________________________
+ | Commands: ? ! < > = + *quit *lcars *case FILE: vulcan.lng		  \
+ \________________________________________________________________________/
+
+? live long and	prosper	t'hy'la
+  ________________________________________________________________________
+ / UTA			     CASE MODE insensitive			  \
+ |	   _______________________________________________________________/
+ |________|
+ |_mode___| live long and prosper t'hy'la
+ |_AUTO___|
+ |________| -------------------------------------------------------------
+ |________|
+ |________| tich tor ang tesmur	friend
+ |________|
+ |________|
+ |	  |_______________________________________________________________
+ | Commands: ? ! < > = + *quit *lcars *case FILE: vulcan.lng		  \
+ \________________________________________________________________________/
+
+? *quit
+
+Universal Translator Assistant 2.0
+Joel Peter Anderson, January 29, 1999
+Visit the UTA Project at
+	http://members.aol.com/jpklingon/uta
+
+
+
+$ uta -h
+
+------------
+reading	default	dictionary, uta.lng
+504 words read
+USAGE:
+  ? usage note
+  = current mode
+  <file	read file for language
+  >file	write file for language
+  +worda wordb - add worda/wordb pair
+  ! switch mode
+  *case	- toggle case sensitive
+  *quit	- exit
+  *lcars - toggles verbose LCARS style output
+
+command	line options:
+
+  uta  (-f langfile ) (-o outputfile) (-i inputfile) (-[e|g|a])	text
+
+  -f langfile  switch to langfile
+  -o filename  prints output to	filename (- for	stdout)	(must come before -i)
+  -i filename  reads input from	filename (- for	stdin)
+  -c	       no case sensitivity mode
+  +c	       case sensitivity	mode
+  -e	       English mode
+  -g	       Galactic	mode
+  -a	       Auto mode
+
+    text translated according to mode and language file.
+
+$ uta -f vulcan.lng live long and prosper -f uta.lng today is a	good day to die
+
+------------
+reading	default	dictionary, uta.lng
+504 words read
+
+--read 209 words from vulcan.lng ----------
+tich tor ang tesmur
+--read 504 words from uta.lng ----------
+DaHjaj 'oH [a] QaQ jaj Daq Hegh
+------------
+
+Universal Translator Assistant 2.0
+Joel Peter Anderson, January 29, 1999
+Visit the UTA Project at
+	http://members.aol.com/jpklingon/uta
+
+
+
+NOTICE THE FAIRLY COMPLEX STUFF	YOU CAN	DO WITH	THE COMMAND LINE:
+
+For example to translate the psalm23.txt to Klingon, then back to
+English:
+
+uta -c -o tmp.txt -i psalm23.txt +c -o - -i tmp.txt
+
+------------
+reading	default	dictionary, uta.lng
+504 words read
+[A] Psalm by David
+
+LORD am	my shepherd I shall lack none
+he makes I against lie down against green vegetation field
+he guides I beside still waters
+he restores my soul
+he guides I against [the] paths	forth righteousness for	her [name's] sake
+but though I tread through [the] valley	forth [the] shadow forth death
+I will fear neither evil for you am with I
+your shepherd staff also your staff them comfort I
+you prepare [a]	crib before I against [the] against forth my adversaries
+you have anointed my head with oil
+my cup runs over
+surely good also lovingkindness	shall follow I all [the] days forth my
+[	] alive
+also I shall alive against [Yahweh's] house forever
+
+----------------------------------------------------
+
+Here's the breakdown of	that command line:
+
+uta -c -o tmp.txt -i psalm23.txt +c -o - -i tmp.txt
+
+    -c : ignore	case
+
+       -o tmp.txt : save output	to a
+	       temporary file
+
+		   -i psalm23.txt : translate psalm23.txt
+
+				 +c Case sensitive now
+				   (important for Klingon)
+
+				     -o	- :
+				       output to standard out
+
+					   -i tmp.txt :
+						 translation of
+						  psalm23.txt
+
+
+NOTE: "-o -" isn't needed.  The	output file is closed when
+	we reach the end of the	input file (as is the input file).
+
+___________________________________________________________________________
+
+			 Joel Peter Anderson
+       http://members.aol.com/jpklingon/uta * JPKlingon@aol.com
+___________________________________________________________________________
+
